@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🌹Happy Rose Day</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at top, #1a1a22, #000);
+      font-family: "Poppins", sans-serif;
+      overflow: hidden;
+      color: white;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    h1 {
+      font-weight: 300;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+
+    button {
+      padding: 14px 40px;
+      border: none;
+      border-radius: 40px;
+      background: crimson;
+      color: white;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(255, 0, 90, 0.7);
+      transition: 0.3s;
+    }
+
+    button:hover { transform: scale(1.08); }
+
+    #roseBox {
+      margin-top: 10px;
+      display: none;
+    }
+
+    /* STEM DRAW */
+    #stem {
+      stroke-dasharray: 400;
+      stroke-dashoffset: 400;
+      transition: 3s ease;
+    }
+
+    /* FIX: PETALS TRANSFORM ORIGIN */
+    .petal {
+      opacity: 0;
+      /* We set the origin to the point (0,0) in their local coordinate system */
+      transform-origin: 0px 0px; 
+      transform: scale(0) rotate(var(--rot));
+      transition: 3s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+    }
+
+    .leaf {
+      opacity: 0;
+      transform: scale(0);
+      transition: 2s ease;
+      transform-origin: center;
+    }
+
+    .dew {
+      opacity: 0;
+      animation: sparkle 2s infinite ease-in-out;
+    }
+
+    @keyframes sparkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .sway {
+      animation: sway 4s ease-in-out infinite;
+      transform-origin: bottom center;
+    }
+
+    @keyframes sway {
+      0%, 100% { transform: rotate(-1.5deg); }
+      50% { transform: rotate(1.5deg); }
+    }
+
+    .falling-petal {
+      position: absolute;
+      top: -50px;
+      width: 20px;
+      height: 20px;
+      background: crimson;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(45deg);
+      opacity: 0.8;
+      animation: fall 6s linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* BLOOM ACTIVE */
+    .bloom #stem { stroke-dashoffset: 0; }
+
+    /* Control the bloom spread */
+    .bloom .petal {
+      opacity: 1;
+      transform: scale(1) rotate(var(--rot));
+    }
+    
+    /* Slightly more spread for outer petals */
+    .bloom .outer { transform: scale(1.2) rotate(var(--rot)); }
+
+    .bloom .leaf { opacity: 1; transform: scale(1); }
+    .bloom .dew { opacity: 1; }
+
+    .love-text {
+      margin-top: 15px;
+      font-size: 1.4rem;
+      color: pink;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: 2s ease;
+    }
+
+    .showText { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <div id="petalRain"></div>
+
+  <div class="container">
+    <p style="font-size: 2rem;">Here is a Surprise for you 🎊</p>
+    <button id="openBtn">Open</button>
+
+    <div id="roseBox">
+      <svg class="sway" width="320" height="450" viewBox="0 0 300 450">
+        <defs>
+          <radialGradient id="petalGrad">
+            <stop offset="0%" stop-color="#ff4d6d"/>
+            <stop offset="100%" stop-color="#800f2f"/>
+          </radialGradient>
+        </defs>
+
+        <path id="stem"
+          d="M150 420 C150 300 150 250 150 160"
+          stroke="#2d5a27"
+          stroke-width="8"
+          fill="none"
+          stroke-linecap="round"
+        />
+
+        <path class="leaf" d="M150 310 C110 290 90 340 150 350" fill="#1e3d1a" />
+        <path class="leaf" d="M150 260 C190 240 210 290 150 300" fill="#2d5a27" />
+
+        <g transform="translate(150,160)">
+          
+          <path class="petal outer" style="--rot:0deg" d="M0 0 C-50 -100 50 -100 0 0" fill="url(#petalGrad)"/>
+          <path class="petal outer" style="--rot:72deg" d="M0 0 C-50 -100 50 -100 0 0" fill="url(#petalGrad)"/>
+          <path class="petal outer" style="--rot:144deg" d="M0 0 C-50 -100 50 -100 0 0" fill="url(#petalGrad)"/>
+          <path class="petal outer" style="--rot:216deg" d="M0 0 C-50 -100 50 -100 0 0" fill="url(#petalGrad)"/>
+          <path class="petal outer" style="--rot:288deg" d="M0 0 C-50 -100 50 -100 0 0" fill="url(#petalGrad)"/>
+
+          <path class="petal" style="--rot:36deg" d="M0 0 C-40 -80 40 -80 0 0" fill="#c9184a"/>
+          <path class="petal" style="--rot:108deg" d="M0 0 C-40 -80 40 -80 0 0" fill="#c9184a"/>
+          <path class="petal" style="--rot:180deg" d="M0 0 C-40 -80 40 -80 0 0" fill="#c9184a"/>
+          <path class="petal" style="--rot:252deg" d="M0 0 C-40 -80 40 -80 0 0" fill="#c9184a"/>
+          <path class="petal" style="--rot:324deg" d="M0 0 C-40 -80 40 -80 0 0" fill="#c9184a"/>
+
+          <path class="petal" style="--rot:0deg" d="M0 0 C-20 -50 20 -50 0 0" fill="#ff7a8a"/>
+          <circle class="dew" cx="10" cy="-30" r="3" fill="white" fill-opacity="0.4"/>
+        </g>
+      </svg>
+
+      <div class="love-text" id="loveText">
+        A rose, for my garden of love ❤️ <br>
+        <span id="userName"></span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const btn = document.getElementById("openBtn");
+    const roseBox = document.getElementById("roseBox");
+    const loveText = document.getElementById("loveText");
+    const petalRain = document.getElementById("petalRain");
+    const userNameSpan = document.getElementById("userName");
+
+    // Get the name from URL parameter 'n', default to 'Sumaiya'
+    const urlParams = new URLSearchParams(window.location.search);
+    const name = urlParams.get('n') || "Sumaiya";
+    userNameSpan.textContent = name;
+
+    btn.addEventListener("click", () => {
+      btn.style.display = "none";
+      roseBox.style.display = "block";
+
+      setTimeout(() => {
+        roseBox.classList.add("bloom");
+      }, 100);
+
+      setTimeout(() => {
+        loveText.classList.add("showText");
+      }, 3500);
+
+      for (let i = 0; i < 15; i++) {
+        let petal = document.createElement("div");
+        petal.className = "falling-petal";
+        petal.style.left = Math.random() * 100 + "vw";
+        petal.style.animationDelay = Math.random() * 5 + "s";
+        petal.style.backgroundColor = i % 2 === 0 ? "crimson" : "#ff4d6d";
+        petalRain.appendChild(petal);
+      }
+    });
+  </script>
+</body>
+</html>
